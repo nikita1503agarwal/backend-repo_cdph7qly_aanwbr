@@ -12,7 +12,7 @@ Model name is converted to lowercase for the collection name:
 """
 
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, List
 
 # Example schemas (replace with your own):
 
@@ -37,6 +37,22 @@ class Product(BaseModel):
     price: float = Field(..., ge=0, description="Price in dollars")
     category: str = Field(..., description="Product category")
     in_stock: bool = Field(True, description="Whether product is in stock")
+
+# Electrician Troubleshooting App Schemas
+
+class IssueReport(BaseModel):
+    """
+    Electrician issue reports submitted from the field
+    Collection name: "issuereport" (lowercase of class name)
+    """
+    technician: str = Field(..., description="Technician name")
+    location: str = Field(..., description="Job site or room")
+    equipment_type: str = Field(..., description="Panel, circuit, outlet, light, appliance, etc.")
+    symptom: str = Field(..., description="Observed primary symptom")
+    notes: Optional[str] = Field(None, description="Additional observations or measurements")
+    resolved: bool = Field(False, description="Whether the issue has been resolved")
+    resolution: Optional[str] = Field(None, description="What fixed it / corrective action")
+    tags: Optional[List[str]] = Field(default=None, description="Optional tags for filtering")
 
 # Add your own schemas here:
 # --------------------------------------------------
